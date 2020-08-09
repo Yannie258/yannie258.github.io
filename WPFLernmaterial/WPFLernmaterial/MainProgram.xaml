@@ -1,0 +1,68 @@
+﻿<Window x:Class="WPFLernmaterial.MainProgram"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFLernmaterial"
+        mc:Ignorable="d"
+        Title="Management Data" Height="680" Width="1250" Background="BlueViolet">
+    <Grid>
+        <Button Name="btnAdd" Content="Hinzufügen" HorizontalAlignment="Left" Margin="171,484,0,0" Background="SkyBlue" 
+                VerticalAlignment="Top" Width="90" Height="28" FontSize="15" FontWeight="Medium" Foreground="Blue" Click="btnAdd_Click"/>
+        <Button Name="btnEdit" Content="Bearbeiten" HorizontalAlignment="Left" FontSize="15" FontWeight="Medium" Foreground="Blue" 
+                Height="28" Margin="285,484,0,0" Background="SkyBlue" VerticalAlignment="Top" Width="90" RenderTransformOrigin="-0.684,4.71" Click="btnEdit_Click"/>
+        <Button  Name="btnDelete" Content="Löschen" HorizontalAlignment="Left" Height="28" Margin="171,533,0,0" FontSize="15" FontWeight="Medium" Foreground="Blue"
+                Background="SkyBlue" VerticalAlignment="Top" Width="90" Click="btnDelete_Click"/>
+        <Button  Name="btnExp" Content="Exportieren" HorizontalAlignment="Left" Height="28" FontSize="15" FontWeight="Medium" Foreground="Blue" 
+                Margin="285,533,0,0" Background="SkyBlue" VerticalAlignment="Top" Width="90" Click="btnExp_Click"/>
+        <Button  Name="btnImp" Content="Importieren" HorizontalAlignment="Left" Height="28" FontSize="15" FontWeight="Medium" Foreground="Blue" 
+                Margin="285,573,0,0" Background="SkyBlue" VerticalAlignment="Top" Width="90" Click="btnImp_Click"/>
+        <Button Name="btnFindid" Content="Suchen" HorizontalAlignment="Left"  Margin="376,50,0,0" FontSize="15" FontWeight="Medium" Foreground="Blue" Background="SkyBlue" VerticalAlignment="Top" Width="60" Height="28" Click="btnFindid_Click"/>
+        <Button Name="btnFind" Content="Suchen" HorizontalAlignment="Left"  Margin="376,90,0,0" FontSize="15" FontWeight="Medium" Foreground="Blue" Background="SkyBlue" VerticalAlignment="Top" Width="60" Height="28" Click="btnFind_Click"/>
+
+        <TextBlock  Name="ID" FontSize="15" Foreground="White" Text="ID" HorizontalAlignment="Left"
+                      Margin="37,50,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBlock  Name="Fachname" FontSize="15" Foreground="White" Text="Fachname" HorizontalAlignment="Left"
+                    Margin="37,90,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+
+        <TextBlock  Name="Dozentvorname" FontSize="15" Foreground="White" Text="Dozent-Vorname" HorizontalAlignment="Left"
+                    Margin="37,130,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBlock  Name="Dozentnachname" FontSize="15" Foreground="White" Text="Dozent-Nachname" HorizontalAlignment="Left"
+                    Margin="37,170,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBlock  Name="Seminar" FontSize="15" Foreground="White" Text="Seminar" HorizontalAlignment="Left"
+                    Margin="37,210,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBlock  FontSize="15" Foreground="White" Text="Erstelldatum" HorizontalAlignment="Left"
+                    Margin="37,250,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBlock  Name="Lernmaterial" FontSize="15" Foreground="White" Text="Lernmaterial" HorizontalAlignment="Left"
+                    Margin="37,290,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <DatePicker Name="datum" Margin="191,254,853.333,335.667"/>
+        <TextBox Name="id" HorizontalAlignment="Left"  Height="23" Margin="191,50,0,0" 
+                 TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Background="Bisque"/>
+        <TextBox  Name="fachName" HorizontalAlignment="Left" VerticalScrollBarVisibility="Auto" Height="23" Margin="191,90,0,0" 
+                 TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180" Background="Bisque"/>
+        <TextBox Name="dozentVorname" HorizontalAlignment="Left" Height="23" Margin="191,130,0,0" 
+                 TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180" Background="Bisque"/>
+        <TextBox Name="dozentNachname" HorizontalAlignment="Left" Height="23" Margin="191,170,0,0" 
+                 TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180" Background="Bisque"/>
+        <TextBox  Name="seminar" HorizontalAlignment="Left" Height="23" Margin="191,210,0,0" 
+                 TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180" Background="Bisque"/>
+        <TextBox  Name="path" HorizontalAlignment="Left" Height="23" Margin="81,573,0,0" 
+                 TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180" Background="Bisque"/>
+        <TextBox  Name="material" HorizontalAlignment="Left" Height="171" Margin="141,290,0,0" VerticalScrollBarVisibility="Visible"
+                 TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="257" Background="Bisque"/>
+        <StackPanel Margin="50">
+            <DataGrid Name="gridData" ScrollViewer.IsDeferredScrollingEnabled="True" HorizontalAlignment="Right" Height="510"  VerticalAlignment="Top" Width="718" SelectionChanged="gridData_SelectionChanged"/>
+
+        </StackPanel>
+        <StackPanel Margin="20">
+            <Button  x:Name="btnExit" Content="Schließen" HorizontalAlignment="Center" FontSize="15" FontWeight="Medium" Foreground="Blue" Margin="400,560,0,0" Background="SkyBlue" 
+                VerticalAlignment="Bottom" Width="110" Height="28" Click="btnExit_Click"/>
+
+        </StackPanel>
+        <Button  x:Name="btnShow" Content="Show All" HorizontalAlignment="Center" FontSize="15" FontWeight="Medium" Foreground="Blue" Margin="482,0,661.333,42.667" Background="SkyBlue" 
+                VerticalAlignment="Bottom" Width="100" Height="28" Click="btnShow_Click" />
+
+
+
+    </Grid>
+</Window>
