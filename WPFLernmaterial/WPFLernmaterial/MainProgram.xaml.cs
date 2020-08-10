@@ -25,21 +25,32 @@ namespace WPFLernmaterial
     /// </summary>
     public partial class MainProgram : Excel.Window
     {
+        //am Anfang wuerden alle Dateien in Database angezeigt
         public MainProgram()
         {
             InitializeComponent();
             showData();
         }
+        //Sqldatabase Addresse
         private string sql = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\coanh\OneDrive\Documents\c#\Abschlussarbeit Muster\WPFLernmaterial\WPFLernmaterial\Database1.mdf;Integrated Security = True";
+        
+        //Methode für Add Button
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            //connect to Database
             SqlConnection connect = new SqlConnection(sql);
+            //fuegen eingetippten Datei aus Textbox ins Database ein
             SqlCommand command = new SqlCommand("insert into TBLData(Id,Fachname,Dozentvorname,Dozentnachname,Seminar,Datum,Lernmaterial) values('" + id.Text + "','" + fachName.Text + "','" + dozentVorname.Text + "','" + dozentNachname.Text + "','" + seminar.Text + "','" + datum.Text + "', '" + material.Text + "')", connect);
+ 
+            // wenn Befehl kann ausfuehren -> Message und loeschen Data in Textbox
+            // sonst Fehler ausgeben
+            //Zum Schluss "close connect" und Data in Datagrid anzeigen
             try
             {
-                connect.Open();
-                command.ExecuteNonQuery();
-                MessageBox.Show("Einfügen erfolgreich!");
+
+                connect.Open(); //open Verbindung
+                command.ExecuteNonQuery(); //setzen Befehl durch
+                MessageBox.Show("Einfügen erfolgreich!"); 
                 clear();
             }
             catch (Exception ex)
@@ -54,18 +65,10 @@ namespace WPFLernmaterial
             }
 
         }
+
+
+        //Methode für Ẽdit Button aehnlich wie Add Button nur anderen Befehl update statt insert getnutzt wird
         
-
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show("Wollen Sie das Programm schließen?", "", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
-            {
-                Environment.Exit(0);
-
-            }
-        }
-
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             SqlConnection connect = new SqlConnection(sql);
@@ -89,6 +92,9 @@ namespace WPFLernmaterial
             }
         }
 
+
+        //Methode für Delete Button aehnlich wie Add Button nur anderen Befehl delete statt insert getnutzt wird
+       // Datei nach dem geloescht werden, werden auch in TextBox verschwunden
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             SqlConnection connect = new SqlConnection(sql);
@@ -111,15 +117,20 @@ namespace WPFLernmaterial
                 showData();
             }
         }
+        //Methode für Show Button
+        //zeigen alle Datei in Database an
         private void btnShow_Click(object sender, RoutedEventArgs e)
         {
             showData();
 
         }
+        // clear alle TextBoxes
         private void clear()
         {
             id.Text=fachName.Text = fachName.Text = dozentVorname.Text = dozentNachname.Text = seminar.Text = material.Text = null;
         }
+
+        // Hiftmethode fuer Show Button
         private void search()
         {
             SqlConnection connect = new SqlConnection(sql);
@@ -127,8 +138,11 @@ namespace WPFLernmaterial
             DataTable dt = new DataTable();
             da.Fill(dt);
         }
-       
 
+        //Methode für Find Id Button
+        //Suchen Data nach Id Nummer
+        //'select' Abfrage nutzen
+        //
         private void btnFindid_Click(object sender, RoutedEventArgs e)
         {
             SqlConnection connect = new SqlConnection(sql);
@@ -137,8 +151,11 @@ namespace WPFLernmaterial
 
             try
             {
+                // Data in Datatable aktualisieren
                 DataTable dt = new DataTable();
                 da.Fill(dt);
+
+                //nur die Daten nach ID angezeigt werden
                fachName.Text = dt.Rows[0][1].ToString();
                 dozentVorname.Text = dt.Rows[0][2].ToString();
                 dozentNachname.Text = dt.Rows[0][3].ToString();
@@ -159,6 +176,8 @@ namespace WPFLernmaterial
                 
             }
         }
+        //Methode für Find nach Fachname Button
+        //Suchen Data nach Fachname
         private void btnFind_Click(object sender, RoutedEventArgs e)
         {
             SqlConnection connect = new SqlConnection(sql);
@@ -169,6 +188,7 @@ namespace WPFLernmaterial
             {
                 DataTable dt = new DataTable();
                 da.Fill(dt);
+
                 id.Text = dt.Rows[0][0].ToString();
                 dozentVorname.Text = dt.Rows[0][2].ToString();
                 dozentNachname.Text = dt.Rows[0][3].ToString();
@@ -189,16 +209,31 @@ namespace WPFLernmaterial
                
             }
         }
-         private void showData()
+
+
+        //Methode für Ẽxit Button
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Wollen Sie das Programm schließen?", "", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                Environment.Exit(0);
+
+            }
+        }
+        // Methode alle Daten in Database anzeigen 
+        private void showData()
         {
             SqlConnection connect = new SqlConnection(sql);
+
+            //Verbindung mit Source Data durch aktuelle Connection
             SqlDataAdapter da = new SqlDataAdapter("select *from TBLData", connect);
             DataTable dt = new DataTable();
             try
             {
 
                 da.Fill(dt);
-                gridData.ItemsSource = dt.DefaultView;
+                gridData.ItemsSource = dt.DefaultView; //in Datagrid ausgegeben
             }
             catch (Exception ex)
             {
@@ -210,6 +245,7 @@ namespace WPFLernmaterial
                 connect.Close();
             }
         }
+        //Methode fur Suchen Button und zeigt in Datagrid nach ID
          private void filterNameData()
         {
             SqlConnection connect = new SqlConnection(sql);
@@ -231,6 +267,9 @@ namespace WPFLernmaterial
                 connect.Close();
             }
         }
+
+
+        //Methode fur Suchen nach Fachname Button und zeigt in Datagrid
         private void filterIdData()
         {
             SqlConnection connect = new SqlConnection(sql);
@@ -253,6 +292,8 @@ namespace WPFLernmaterial
             }
         }
 
+
+        //Wenn DatagridsZeile geklickt wird, werden alle Datei in TextBox anzeigen
         private void gridData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataGrid dg = (DataGrid)sender;
@@ -269,10 +310,12 @@ namespace WPFLernmaterial
 
             }
         }
+
+        //exportieren Methode
         private bool exportxlx()
         {
             bool xlx = true;
-            Excel.Application excel = new Excel.Application();
+            Excel.Application excel = new Excel.Application(); //Microsoft Excel Bibliothek  
             excel.Visible = true;
             Workbook wb = excel.Workbooks.Add(System.Reflection.Missing.Value);
             Worksheet sheet1 = (Excel.Worksheet)wb.Sheets[1];
@@ -311,7 +354,7 @@ namespace WPFLernmaterial
                 path.Text = open.FileName;
                 Excel.Application exc = new Excel.Application();
                 Excel.Workbook workbook =
-                    exc.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + "excel.xlsx", 0,true,7, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, 0, true, 1, 0);
+                    exc.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + "test.xlsx", 0,true,5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, 0, true, 1, 0);
                 Excel.Worksheet sheet = (Excel.Worksheet)workbook.Worksheets.get_Item(1); ;
                 Excel.Range rang = sheet.UsedRange;
                 string strCellData = "";
@@ -524,6 +567,93 @@ namespace WPFLernmaterial
 
         public int Hwnd => throw new NotImplementedException();
 
-        
-    }
+
+        private void copyAlltoClipboard()
+        {
+            Clipboard.Clear();
+            gridData.SelectAllCells();
+            gridData.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+            ApplicationCommands.Copy.Execute(null, gridData);
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Excel.Application excel = new Excel.Application(); //Microsoft Excel Bibliothek  
+            excel.Visible = true;
+            Workbook wb = excel.Workbooks.Add(System.Reflection.Missing.Value);
+            Worksheet sheet1 = (Excel.Worksheet)wb.Sheets[1];
+
+            for (int i = 0; i < gridData.Columns.Count; i++)
+            {
+                Range rg = (Range)sheet1.Cells[1, i + 1];
+                //sheet1.Cells[1, i + 1].Font.Bold = true;
+
+
+                //sheet1.Columns[i + 1].ColumnWidth = 35;
+                rg.Value2 = gridData.Columns[i].Header;
+            }
+            for (int j = 0; j < gridData.Columns.Count; j++)
+            {
+                for (int i = 0; i < gridData.Items.Count; i++)
+                {
+                    TextBlock b = gridData.Columns[j].GetCellContent(gridData.Items[i]) as TextBlock;
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)sheet1.Cells[i + 2, j + 1];
+                    range.Value2 = b.Text;
+                }
+            }
+        }
+
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog choofdlog = new OpenFileDialog();
+            choofdlog.Filter = "All Files (*.*)|*.*";
+            if (choofdlog.ShowDialog() == DialogResult)
+            {
+                string sFileName = choofdlog.FileName;
+                string path = System.IO.Path.GetFullPath(choofdlog.FileName);
+                Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+                DataSet ds = new DataSet();
+                Microsoft.Office.Interop.Excel.Workbook wb = excel.Workbooks.Open(path);
+                foreach (Microsoft.Office.Interop.Excel.Worksheet ws in wb.Worksheets)
+                {
+                    System.Data.DataTable td = new System.Data.DataTable();
+                    td = await Task.Run(() => formofDataTable(ws));
+                    ds.Tables.Add(td);//This will give the DataTable from Excel file in Dataset
+                }
+                gridData.ItemsSource = ds.Tables[0].DefaultView;
+                wb.Close();
+            }
+        }
+        public System.Data.DataTable formofDataTable(Microsoft.Office.Interop.Excel.Worksheet ws)
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+            string worksheetName = ws.Name;
+            dt.TableName = worksheetName;
+            Microsoft.Office.Interop.Excel.Range xlRange = ws.UsedRange;
+            object[,] valueArray = (object[,])xlRange.get_Value(XlRangeValueDataType.xlRangeValueDefault);
+            for (int k = 1; k <= valueArray.GetLength(1); k++)
+            {
+                dt.Columns.Add((string)valueArray[1, k]);  //add columns to the data table.
+            }
+            object[] singleDValue = new object[valueArray.GetLength(1)]; //value array first row contains column names. so loop starts from 2 instead of 1
+            for (int i = 2; i <= valueArray.GetLength(0); i++)
+            {
+                for (int j = 0; j < valueArray.GetLength(1); j++)
+                {
+                    if (valueArray[i, j + 1] != null)
+                    {
+                        singleDValue[j] = valueArray[i, j + 1].ToString();
+                    }
+                    else
+                    {
+                        singleDValue[j] = valueArray[i, j + 1];
+                    }
+                }
+                dt.LoadDataRow(singleDValue, System.Data.LoadOption.PreserveChanges);
+            }
+
+            return dt;
+        }
+        }
 }

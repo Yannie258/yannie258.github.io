@@ -33,6 +33,7 @@
                     Margin="37,210,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBlock  FontSize="15" Foreground="White" Text="Erstelldatum" HorizontalAlignment="Left"
                     Margin="37,250,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <Button Content="Button" Width="50" Margin="386,546,807.333,84.667" Height="20" Click="Button_Click_1"/>
         <TextBlock  Name="Lernmaterial" FontSize="15" Foreground="White" Text="Lernmaterial" HorizontalAlignment="Left"
                     Margin="37,290,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <DatePicker Name="datum" Margin="191,254,853.333,335.667"/>
@@ -57,6 +58,8 @@
         <StackPanel Margin="20">
             <Button  x:Name="btnExit" Content="Schließen" HorizontalAlignment="Center" FontSize="15" FontWeight="Medium" Foreground="Blue" Margin="400,560,0,0" Background="SkyBlue" 
                 VerticalAlignment="Bottom" Width="110" Height="28" Click="btnExit_Click"/>
+            <Button Content="Button" Click="Button_Click"/>
+          
 
         </StackPanel>
         <Button  x:Name="btnShow" Content="Show All" HorizontalAlignment="Center" FontSize="15" FontWeight="Medium" Foreground="Blue" Margin="482,0,661.333,42.667" Background="SkyBlue" 
